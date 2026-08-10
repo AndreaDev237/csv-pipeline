@@ -1,7 +1,4 @@
-"""Scarica e legge il CSV delle rilevazioni.
-
-Versione attesa dall'AI, da confermare in registrazione. Contiene l'errore #1.
-"""
+"""Scarica e legge il CSV delle rilevazioni."""
 
 import csv
 import urllib.request
@@ -16,5 +13,10 @@ def scarica_csv(url: str, destinazione: Path) -> Path:
 
 
 def leggi_csv(percorso: Path) -> list:
-    contenuto = percorso.read_bytes().decode("utf-8")
+    """Legge il CSV in cp1252.
+
+    Non latin-1: l'en dash di "Brescia - Villaggio Sereno" in latin-1 non
+    esiste. latin-1 non solleverebbe eccezione, corromperebbe in silenzio.
+    """
+    contenuto = percorso.read_bytes().decode("cp1252")
     return list(csv.DictReader(contenuto.splitlines()))
