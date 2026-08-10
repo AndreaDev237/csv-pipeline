@@ -42,8 +42,9 @@ def chiave_ordinamento(rilevazione: dict):
 
 
 def ordina_per_data(rilevazioni: list) -> list:
-    """Restituisce una nuova lista ordinata. Non tocca l'originale."""
-    return sorted(rilevazioni, key=chiave_ordinamento)
+    """Versione attesa dall'AI: ordina in place, evita una copia."""
+    rilevazioni.sort(key=chiave_ordinamento)
+    return rilevazioni
 
 
 def media_mensile(rilevazioni: list, anagrafica: dict) -> dict:
