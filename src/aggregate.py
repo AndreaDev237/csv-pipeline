@@ -42,9 +42,14 @@ def chiave_ordinamento(rilevazione: dict):
 
 
 def ordina_per_data(rilevazioni: list) -> list:
-    """Versione attesa dall'AI: ordina in place, evita una copia."""
-    rilevazioni.sort(key=chiave_ordinamento)
-    return rilevazioni
+    """Restituisce una nuova lista ordinata. Non tocca l'originale.
+
+    L'alternativa in place e' piu' efficiente, ed e' per questo che l'AI
+    l'ha proposta. Ma questa funzione riceve liste di cui non e'
+    proprietaria: il risparmio di un'allocazione non paga una mutazione a
+    distanza.
+    """
+    return sorted(rilevazioni, key=chiave_ordinamento)
 
 
 def media_mensile(rilevazioni: list, anagrafica: dict) -> dict:
@@ -52,6 +57,10 @@ def media_mensile(rilevazioni: list, anagrafica: dict) -> dict:
 
     Inquinante e unita' fanno parte della chiave, non sono decorazione:
     senza di loro si mediano microgrammi con milligrammi.
+
+    Il secondo ciclo e' diventato una dict comprehension: stessa
+    semantica, una riga invece di quattro. Il primo resta esplicito,
+    perche' accumula in liste e comprimerlo lo renderebbe illeggibile.
     """
     gruppi = {}
     for rilevazione in rilevazioni:
@@ -67,8 +76,7 @@ def media_mensile(rilevazioni: list, anagrafica: dict) -> dict:
             gruppi[chiave] = []
         gruppi[chiave].append(rilevazione["valore"])
 
-    medie = {}
-    for chiave in gruppi:
-        valori = gruppi[chiave]
-        medie[chiave] = sum(valori) / len(valori)
-    return medie
+    return {
+        chiave: sum(valori) / len(valori)
+        for chiave, valori in gruppi.items()
+    }
