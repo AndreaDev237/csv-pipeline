@@ -1,0 +1,13 @@
+IdSensore,NomeTipoSensore,UnitaMisura,IdStazione,NomeStazione,Quota,Provincia,Comune,Storico,DataStart,DataStop,lat,lng
+10001,PM10,µg/m³,501,Milano - Viale Marche,122,MI,Milano,N,2015-01-01,,45.5012,9.1934
+10002,NO2,µg/m³,501,Milano - Viale Marche,122,MI,Milano,N,2015-01-01,,45.5012,9.1934
+10003,PM10,µg/m³,502,Brescia – Villaggio Sereno,149,BS,Brescia,N,2015-01-01,,45.5089,10.2011
+10004,CO,mg/m³,502,Brescia – Villaggio Sereno,149,BS,Brescia,N,2015-01-01,,45.5089,10.2011
+10005,PM10,µg/m³,503,Cantù - Via Meucci,369,CO,Cantù,N,2015-01-01,,45.7401,9.1330
+10006,NO2,µg/m³,503,Cantù - Via Meucci,369,CO,Cantù,N,2015-01-01,,45.7401,9.1330
+10007,PM2.5,µg/m³,504,Monza - Parco,165,MB,Monza,N,2015-01-01,,45.6011,9.2712
+10008,O3,µg/m³,504,Monza - Parco,165,MB,Monza,N,2015-01-01,,45.6011,9.2712
+10009,PM10,µg/m³,505,Bergamo - Via Garibaldi,249,BG,Bergamo,N,2015-01-01,,45.6983,9.6773
+10010,CO,mg/m³,505,Bergamo - Via Garibaldi,249,BG,Bergamo,N,2015-01-01,,45.6983,9.6773
+10011,PM2.5,µg/m³,506,Cremona - Via Fatebenefratelli,45,CR,Cremona,N,2015-01-01,,45.1335,10.0227
+10012,O3,µg/m³,506,Cremona - Via Fatebenefratelli,45,CR,Cremona,N,2015-01-01,2025-06-30,45.1335,10.0227

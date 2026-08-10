@@ -1,0 +1,9 @@
+{
+  "righe_totali": 4219,
+  "righe_non_valide": 199,
+  "righe_in_taratura": 5,
+  "righe_malformate": 7,
+  "righe_duplicate": 23,
+  "righe_valide_attese": 4013,
+  "prima_riga_non_ascii": 731
+}
