@@ -6,6 +6,15 @@ from pathlib import Path
 
 CODIFICA_SORGENTE = "cp1252"
 
+URL_MISURE = (
+    "https://raw.githubusercontent.com/AndreaDev237/csv-pipeline"
+    "/master/data/rilevazioni_2025.csv"
+)
+URL_ANAGRAFICA = (
+    "https://raw.githubusercontent.com/AndreaDev237/csv-pipeline"
+    "/master/data/stazioni.csv"
+)
+
 NOMI_COLONNE = [
     "IdSensore", "NomeStazione", "Data", "Valore", "Stato", "idOperatore",
 ]
