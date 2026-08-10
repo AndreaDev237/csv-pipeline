@@ -275,7 +275,11 @@ def scrivi_misure(misure: list[dict], manifest: dict, destinazione: Path) -> Non
             campi = campi[:CAMPI_NELLE_RIGHE_MALFORMATE]
         linee.append(",".join(_quota(c) for c in campi))
 
-    destinazione.write_bytes(("\r\n".join(linee) + "\r\n").encode("cp1252"))
+    # Fine riga LF e non CRLF: git normalizza comunque i CRLF in commit, e
+    # il file scaricato dallo studente sarebbe diverso da quello generato.
+    # Nessuna lezione dipende dalle fine riga; il segnale "export Excel" lo
+    # porta gia' la codifica cp1252.
+    destinazione.write_bytes(("\n".join(linee) + "\n").encode("cp1252"))
 
     percorso_manifest = destinazione.parent / "manifest.json"
     percorso_manifest.write_text(

@@ -242,7 +242,7 @@ def test_intestazione_con_casing_incoerente(tmp_path: Path):
     misure, manifest = inietta_difetti(genera_misure())
     scrivi_misure(misure, manifest, destinazione)
 
-    prima_riga = destinazione.read_bytes().split(b"\r\n")[0].decode("cp1252")
+    prima_riga = destinazione.read_bytes().split(b"\n")[0].decode("cp1252")
 
     assert prima_riga == (
         '"IdSensore","NomeStazione","Data","Valore","Stato","idOperatore"'
