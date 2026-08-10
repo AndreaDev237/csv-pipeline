@@ -1,6 +1,4 @@
 import json
-
-import pytest
 from datetime import date
 from pathlib import Path
 
@@ -90,19 +88,27 @@ def test_produce_dizionari_con_le_chiavi_attese():
     ]
 
 
-def test_dataset_processato_generato_dall_ai():
-    """Versione attesa dall'AI, da confermare in registrazione."""
+def test_ogni_riga_finisce_in_valide_o_in_scarti():
+    """Attesa derivata dal manifest, non inventata.
+
+    Il manifest lo scrive il generatore contando i dati veri. Un numero
+    scritto a mano in un assert non ha nessuna fonte.
+    """
     righe = carica_righe()
+    manifest = carica_manifest()
 
     valide, scarti = valida(righe)
 
-    assert len(valide) > 0
-    assert len(valide) + len(scarti) == len(righe)
-    assert len(scarti) < len(righe) * 0.5
+    assert len(valide) == manifest["righe_valide_attese"]
+    assert len(valide) + len(scarti) == manifest["righe_totali"]
 
 
-def test_valori_con_virgola_generato_dall_ai():
-    """Versione attesa dall'AI, da confermare in registrazione."""
+def test_i_valori_con_virgola_diventano_float():
+    """Nessuna guardia skip: se il dato manca, il test deve fallire.
+
+    Una guardia skip disattiva il test proprio nel caso in cui
+    servirebbe.
+    """
     righe = carica_righe()
 
     con_virgola = []
@@ -110,9 +116,27 @@ def test_valori_con_virgola_generato_dall_ai():
         if riga.get("Valore") is not None and "," in riga["Valore"]:
             con_virgola.append(riga)
 
-    if not con_virgola:
-        pytest.skip("Dataset non contiene valori con virgola")
+    assert len(con_virgola) > 0
 
     valide, _ = valida(con_virgola)
+    assert len(valide) > 0
     for rilevazione in valide:
         assert isinstance(rilevazione["valore"], float)
+
+
+def test_valida_non_muta_l_input():
+    """Rete di sicurezza contro le mutazioni silenziose.
+
+    Serve qui e servira' ancora alla L9, quando un refactor proporra' di
+    ordinare in place.
+    """
+    righe = carica_righe()
+
+    prima = []
+    for riga in righe:
+        prima.append(dict(riga))
+
+    valida(righe)
+    valida(righe)
+
+    assert righe == prima
