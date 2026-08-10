@@ -1,4 +1,6 @@
 import json
+
+import pytest
 from datetime import date
 from pathlib import Path
 
@@ -86,3 +88,31 @@ def test_produce_dizionari_con_le_chiavi_attese():
     assert list(valide[0].keys()) == [
         "id_sensore", "nome_stazione", "data", "valore",
     ]
+
+
+def test_dataset_processato_generato_dall_ai():
+    """Versione attesa dall'AI, da confermare in registrazione."""
+    righe = carica_righe()
+
+    valide, scarti = valida(righe)
+
+    assert len(valide) > 0
+    assert len(valide) + len(scarti) == len(righe)
+    assert len(scarti) < len(righe) * 0.5
+
+
+def test_valori_con_virgola_generato_dall_ai():
+    """Versione attesa dall'AI, da confermare in registrazione."""
+    righe = carica_righe()
+
+    con_virgola = []
+    for riga in righe:
+        if riga.get("Valore") is not None and "," in riga["Valore"]:
+            con_virgola.append(riga)
+
+    if not con_virgola:
+        pytest.skip("Dataset non contiene valori con virgola")
+
+    valide, _ = valida(con_virgola)
+    for rilevazione in valide:
+        assert isinstance(rilevazione["valore"], float)
