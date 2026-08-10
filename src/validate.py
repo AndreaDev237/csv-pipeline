@@ -1,17 +1,25 @@
 """Normalizza e valida le righe grezze.
 
-Versione attesa dall'AI, da confermare in registrazione. Contiene l'errore #2.
+Formati corretti. Il criterio di validita' e' ancora il segno del valore:
+sede dell'errore #2.
 """
 
 from datetime import datetime
 
+FORMATO_ITALIANO = "%d/%m/%Y %H:%M"
+
 
 def normalizza_data(grezzo: str):
-    return datetime.fromisoformat(grezzo).date()
+    """Accetta l'ISO del primo export e il formato italiano del secondo."""
+    try:
+        return datetime.fromisoformat(grezzo).date()
+    except ValueError:
+        return datetime.strptime(grezzo, FORMATO_ITALIANO).date()
 
 
 def normalizza_valore(grezzo: str) -> float:
-    return float(grezzo)
+    """Accetta il punto decimale e la virgola del locale italiano."""
+    return float(grezzo.replace(",", "."))
 
 
 def valida(righe: list) -> tuple:
