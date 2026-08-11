@@ -25,19 +25,14 @@ didattico: non serve riguardare il video per ricordare cosa e' successo.
 | Tag | Lezione | Cosa contiene |
 |---|---|---|
 | `l04-start` | 4 | c'e' il dataset, non c'e' codice |
-| `l04-ai-sbagliata` | 4 | download che assume UTF-8 |
-| `l04-end` | 4 | encoding cp1252 |
-| `l05-end` | 5 | leggibilita', nessun cambio di comportamento |
-| `l06-ai-sbagliata` | 6 | validazione che filtra sul segno del valore |
-| `l06-formati` | 6 | due formati di data e virgola decimale corretti |
-| `l06-end` | 6 | il criterio e' la colonna Stato |
-| `l07-ai-sbagliata` | 7 | test che non possono fallire |
-| `l07-end` | 7 | attese derivate dal manifest |
-| `l08-ai-sbagliata` | 8 | medie che mescolano inquinanti e unita' |
-| `l08-end` | 8 | inquinante e unita' nella chiave |
-| `l09-ai-sbagliata` | 9 | ordinamento in place che muta l'input |
-| `l09-end` | 9 | rifiutato il suggerimento, accettata la comprehension |
-| `l10-end` | 10 | SQLite con vincolo UNIQUE, CLI |
+| `l04-prima-versione` | 4 | download che assume UTF-8: il file e' cp1252 |
+| `l04-end` | 4 | encoding corretto, codice leggibile |
+| `l05-formati` | 5 | due formati di data e virgola decimale gestiti |
+| `l05-end` | 5 | validazione completa |
+| `l06-end` | 6 | suite pytest |
+| `l07-bug-mutazione` | 7 | **il bug: `list.sort()` muta la lista del chiamante** |
+| `l07-end` | 7 | aggregazione e refactor, bug corretto |
+| `l08-end` | 8 | SQLite con vincolo UNIQUE, CLI |
 
 ## Come si esegue
 
@@ -86,10 +81,27 @@ sbagliato, e' cambiato il modello.
 | Claude Code | versione DA COMPILARE, piano DA COMPILARE |
 | Python | DA COMPILARE |
 
-## Stato di questo repository
+## Il bug della lezione 7
 
-Il codice e i test sono completi e la storia git e' costruita. Gli stati
-marcati "versione attesa, da confermare in registrazione" sono il
-riferimento del piano, **non output reali degli strumenti AI**: vanno
-sostituiti con cio' che gli strumenti producono davvero durante la
-registrazione. La cartella `prompts/` e' ancora vuota per questo motivo.
+Il modulo mostra un solo errore dell'AI, ed e' questo:
+
+    git diff l07-bug-mutazione l07-end -- src/aggregate.py
+
+Chiesto di rendere il codice piu' efficiente, l'assistente propone
+`lista.sort()` al posto di `sorted(lista)`. E' davvero piu' efficiente:
+evita di allocare una copia. Ma ordina la lista del chiamante, che non e'
+sua. Il test di integrita' scritto alla lezione 6 lo cattura alla seconda
+chiamata.
+
+Il suggerimento e' corretto sul piano richiesto e sbagliato su un piano
+che non era stato nominato. E' il motivo per cui il modulo insiste sulla
+regola "so spiegarlo".
+
+## Il dataset e' sporco di proposito
+
+Codifica cp1252, date in due formati, virgole decimali, righe troncate,
+valori sentinella `-9999`, duplicati da ritrasmissione. Non sono trappole
+per l'AI: sono i difetti che hanno i dati veri, e trattarli e' il lavoro.
+
+Aprire il file in UTF-8 solleva `UnicodeDecodeError` alla riga 731. E' il
+traceback su cui lavora la lezione 5.
