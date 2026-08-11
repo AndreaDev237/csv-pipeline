@@ -43,12 +43,12 @@ def test_scarta_le_righe_non_validate():
 
 
 def test_scarta_le_righe_in_taratura():
-    """Il cuore dell'errore #2.
+    """Cinque righe marcate NA con un valore plausibile.
 
-    Cinque righe del sensore 10001, dall'8 al 12 settembre, sono marcate
-    Stato = "NA" ma conservano un valore plausibile: il sensore
-    trasmetteva, il dato non e' validato. Il filtro sul segno le lascia
-    passare tutte, perche' il valore e' positivo.
+    Sensore 10001, dall'8 al 12 settembre: era in taratura, trasmetteva, e
+    il dato non e' validato. Scartare i valori negativi le lascia passare
+    tutte, perche' il valore e' positivo. Solo la colonna Stato le
+    riconosce.
     """
     righe = carica_righe()
 

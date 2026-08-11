@@ -63,7 +63,11 @@ def test_anagrafica_e_utf8_e_contiene_accenti(tmp_path: Path):
 
 
 def test_le_unita_di_misura_non_sono_omogenee(tmp_path: Path):
-    """Il CO in mg/m3 e' il fulcro dell'errore #4: deve esistere."""
+    """Le due scale devono restare separate da un ordine di grandezza.
+
+    Se si sovrapponessero, mediare CO e PM10 insieme darebbe un numero
+    plausibile e nessuno se ne accorgerebbe guardando i risultati.
+    """
     destinazione = tmp_path / "stazioni.csv"
     scrivi_anagrafica(destinazione)
 
@@ -107,7 +111,11 @@ def test_valori_nel_range_dell_inquinante():
 
 
 def test_il_co_e_due_ordini_di_grandezza_sotto_il_pm10():
-    """Se questa proprieta' cade, l'errore #4 smette di essere visibile."""
+    """Il CO in mg/m3 sta due ordini di grandezza sotto il PM10 in ug/m3.
+
+    E' la proprieta' che rende osservabile la differenza fra aggregare per
+    inquinante e aggregare alla cieca.
+    """
     misure = genera_misure()
     co = [m["valore"] for m in misure if m["id_sensore"] == "10004"]
     pm10 = [m["valore"] for m in misure if m["id_sensore"] == "10001"]
@@ -199,10 +207,10 @@ def test_la_prima_riga_non_ascii_e_la_731():
 
 
 def test_le_righe_in_taratura_sono_na_con_valore_plausibile():
-    """Senza queste righe l'errore #2 non e' osservabile.
+    """Scartare i valori negativi le lascia passare tutte.
 
-    Filtrare su valore >= 0 le lascia passare tutte, perche' il valore e'
-    plausibile: solo la colonna Stato dice che non sono validate.
+    Il valore e' plausibile: solo la colonna Stato dice che non sono
+    validate. Sono le righe che distinguono i due criteri di filtro.
     """
     misure, manifest = inietta_difetti(genera_misure())
     taratura = [

@@ -68,8 +68,9 @@ NUMERO_DUPLICATI = 23
 
 # Righe marcate NA che conservano un valore plausibile: sensore in taratura
 # o in verifica, che continua a trasmettere ma il cui dato non e' validato.
-# Senza queste righe, filtrare su valore >= 0 coincide con filtrare su
-# Stato == "VA", e l'errore #2 non e' osservabile.
+# Senza queste righe, scartare i valori negativi darebbe lo stesso risultato
+# che leggere la colonna Stato, e la differenza fra i due criteri sarebbe
+# invisibile. Sui dati reali quella differenza esiste.
 TARATURA_10001 = (date(2025, 9, 8), date(2025, 9, 12))
 VALORE_IN_TARATURA = 44.7
 

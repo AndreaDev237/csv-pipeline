@@ -46,7 +46,10 @@ def test_la_chiave_include_inquinante_e_unita():
 
 
 def test_non_mescola_unita_diverse_dello_stesso_comune():
-    """Il cuore dell'errore #4: PM10 in ug/m3 e CO in mg/m3 non si sommano."""
+    """PM10 in ug/m3 e CO in mg/m3 non si mediano insieme.
+
+    La media uscirebbe comunque, e sarebbe un numero senza significato.
+    """
     anagrafica = carica_anagrafica_di_prova()
     rilevazioni = [
         rilevazione("10003", "Brescia – Villaggio Sereno", date(2025, 1, 5), 50.0),
