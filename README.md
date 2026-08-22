@@ -25,20 +25,26 @@ successo.
 | `l04-start` | 4 | c'e' il dataset, non c'e' codice |
 | `l04-prima-versione` | 4 | download che assume UTF-8: il file e' cp1252 |
 | `l04-end` | 4 | encoding corretto, codice leggibile |
-| `l05-start` | 5 | = `l04-end` |
+| `l05-start` | 5 | validazione ingenua: un solo formato, filtro sul segno |
 | `l05-formati` | 5 | due formati di data e virgola decimale gestiti |
 | `l05-end` | 5 | validazione completa |
 | `l06-start` | 6 | = `l05-end` |
 | `l06-end` | 6 | suite pytest |
-| `l07-start` | 7 | = `l06-end` |
+| `l07-start` | 7 | **media mensile senza inquinante ne' unita' nella chiave** |
 | `l07-bug-mutazione` | 7 | **il bug: `list.sort()` muta la lista del chiamante** |
 | `l07-end` | 7 | aggregazione e refactor, bug corretto |
 | `l08-start` | 8 | = `l07-end` |
 | `l08-end` | 8 | SQLite con vincolo UNIQUE, CLI |
 | `l09-start` | 9 | = `l08-end`. La lezione 9 non scrive codice |
 
-Ogni `lNN-end` coincide con `l(NN+1)-start`: la storia e' lineare e i tag sono
-due nomi per lo stesso commit.
+La storia e' lineare. Quasi tutti gli `lNN-end` coincidono con il
+`l(NN+1)-start` successivo: sono due nomi per lo stesso commit.
+
+Le eccezioni sono `l05-start` e `l07-start`, che stanno **un commit piu' avanti**
+del `lNN-end` precedente. Quel commit contiene il codice su cui la lezione
+lavora: la validazione ingenua per la L5, l'aggregazione con la chiave sbagliata
+per la L7. E' deliberato: quelle due lezioni debuggano e refactorano codice che
+esiste gia', invece di sperare che l'AI lo sbagli allo stesso modo ogni volta.
 
 **Nota sui messaggi di commit.** I tag seguono la numerazione attuale delle
 lezioni. I messaggi di commit portano ancora quella di una versione precedente
